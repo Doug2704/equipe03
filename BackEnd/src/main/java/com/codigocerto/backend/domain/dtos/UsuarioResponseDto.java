@@ -18,4 +18,5 @@ public record UsuarioResponseDto(
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataCadastro,
         String status
 ) {
+
 }
