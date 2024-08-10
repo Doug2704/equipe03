@@ -17,7 +17,7 @@ public class Mapper {
                 usuario.getLinguagem(),
                 usuario.getDescricao(),
                 usuario.getDataCadastro(),
-                usuario.getStatus()
+                usuario.getStatus().getStatusCadastramento()
                 );
     }
 }

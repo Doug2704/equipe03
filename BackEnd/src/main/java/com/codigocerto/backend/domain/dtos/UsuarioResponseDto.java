@@ -16,6 +16,6 @@ public record UsuarioResponseDto(
         String linguagem,
         String descricao,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataCadastro,
-        Status status
+        String status
 ) {
 }
