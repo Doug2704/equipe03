@@ -24,12 +24,12 @@ public class UsuarioService {
     private final UsuarioRepository repository;
     private static final String NENHUM_USUARIO = "Nenhum usuario encontrada com ID: ";
 
-    public List<UsuarioResponseDto> findAll(){
+    public List<UsuarioResponseDto> findAll() {
         log.info("Listando todos os usuarios");
         return repository.findAll().stream().map(Mapper::toDto).toList();
     }
 
-    public UsuarioResponseDto findById(Long id){
+    public UsuarioResponseDto findById(Long id) {
         log.info("Buscando usuario com ID: {}", id);
         return repository.findById(id).map(Mapper::toDto).orElseThrow(() -> new ResourceNotFoundException(NENHUM_USUARIO + id));
     }
@@ -56,4 +56,5 @@ public class UsuarioService {
         log.info("Criando novo usuario");
         return Mapper.toDto(repository.save(usuario));
     }
+
 }

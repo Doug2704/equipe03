@@ -1,13 +1,10 @@
 package com.codigocerto.backend.domain.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public record UsuarioRequestDto(
 
-    @NotBlank(message = "{nome.obrigatorio}") 
+    @NotBlank(message = "{nome.obrigatorio}")
     @Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]+$", message = "{campo.letras}")
     @Size(min = 3, message = "'${validatedValue}' precisa ter, pelo menos, {min} caracteres.")
     String nome,
@@ -33,4 +30,6 @@ public record UsuarioRequestDto(
     @NotBlank(message = "{campo.obrigatorio}")
     @Size(max = 300, message = "O campo '${validatedValue}' não pode ter mais que {max} caracteres")
     String descricao
+
 ) {}
+
