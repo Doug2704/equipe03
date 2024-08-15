@@ -1,7 +1,6 @@
 package com.codigocerto.backend.domain.entities;
 
 import com.codigocerto.backend.domain.enums.Status;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,7 +40,6 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private String descricao;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     @Column(name = "data_cadastro", nullable = false)
     private LocalDateTime dataCadastro;
 

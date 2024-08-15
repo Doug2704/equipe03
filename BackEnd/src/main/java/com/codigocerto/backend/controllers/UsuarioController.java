@@ -35,11 +35,11 @@ public class UsuarioController {
         List<UsuarioResponseDto> usuarioResponseDtos = usuarioService.findAll();
         return new ResponseEntity<>(usuarioResponseDtos, HttpStatus.OK);
     }
+
     @Operation(summary = "busca um usuário pelo ID")
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDto> findById(@PathVariable Long id) {
         UsuarioResponseDto usuarioResponseDto = usuarioService.findById(id);
         return new ResponseEntity<>(usuarioResponseDto, HttpStatus.OK);
     }
-
 }

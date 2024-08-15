@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.atLeastOnce;
@@ -41,9 +40,6 @@ class UsuarioServiceTest {
 
     @Mock
     private UsuarioRequestDto usuarioRequestDto;
-    
-    @Mock
-    private UsuarioResponseDto usuarioResponseDto;
     
     @InjectMocks
     private UsuarioService service;
