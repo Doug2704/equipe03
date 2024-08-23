@@ -30,6 +30,4 @@ public record UsuarioRequestDto(
     @NotBlank(message = "{campo.obrigatorio}")
     @Size(max = 300, message = "O campo '${validatedValue}' não pode ter mais que {max} caracteres")
     String descricao
-
 ) {}
-
