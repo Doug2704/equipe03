@@ -16,5 +16,4 @@ public class Swagger {
                         .version("1.0")
                         .description("API para a plataforma da Código Certo"));
     }
-
 }

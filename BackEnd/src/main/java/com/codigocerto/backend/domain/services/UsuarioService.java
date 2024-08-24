@@ -7,6 +7,7 @@ import com.codigocerto.backend.domain.entities.Usuario;
 import com.codigocerto.backend.domain.enums.Status;
 import com.codigocerto.backend.domain.repositories.UsuarioRepository;
 import com.codigocerto.backend.exceptions.ResourceNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class UsuarioService {
         return repository.findById(id).map(Mapper::toDto).orElseThrow(() -> new ResourceNotFoundException(NENHUM_USUARIO + id));
     }
 
-    public UsuarioResponseDto create(UsuarioRequestDto usuarioRequestDto) {
+    public UsuarioResponseDto create(@Valid UsuarioRequestDto usuarioRequestDto) {
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioRequestDto.nome());
         usuario.setEmail(usuarioRequestDto.email());
@@ -56,5 +57,4 @@ public class UsuarioService {
         log.info("Criando novo usuario");
         return Mapper.toDto(repository.save(usuario));
     }
-
 }

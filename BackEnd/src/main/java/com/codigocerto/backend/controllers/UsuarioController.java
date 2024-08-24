@@ -22,21 +22,21 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @Operation(summary = "cria um novo usuário")
+    @Operation(summary = "Cria um novo usuário")
     @PostMapping
     public ResponseEntity<UsuarioResponseDto> createUsuario(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto) {
         UsuarioResponseDto usuarioResponseDto = usuarioService.create(usuarioRequestDto);
         return new ResponseEntity<>(usuarioResponseDto, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "lista todos os usuários")
+    @Operation(summary = "Lista todos os usuários")
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDto>> findAll() {
         List<UsuarioResponseDto> usuarioResponseDtos = usuarioService.findAll();
         return new ResponseEntity<>(usuarioResponseDtos, HttpStatus.OK);
     }
 
-    @Operation(summary = "busca um usuário pelo ID")
+    @Operation(summary = "Busca um usuário pelo ID")
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDto> findById(@PathVariable Long id) {
         UsuarioResponseDto usuarioResponseDto = usuarioService.findById(id);
