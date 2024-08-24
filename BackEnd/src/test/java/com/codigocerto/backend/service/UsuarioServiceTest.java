@@ -1,4 +1,4 @@
-package com.codigocerto.backend.testesunitarios.service;
+package com.codigocerto.backend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -31,80 +29,86 @@ import com.codigocerto.backend.domain.enums.Status;
 import com.codigocerto.backend.domain.repositories.UsuarioRepository;
 import com.codigocerto.backend.domain.services.UsuarioService;
 import com.codigocerto.backend.exceptions.ResourceNotFoundException;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 class UsuarioServiceTest {
-    
+    private static final Long ID_USUARIO = 1L;
+    private static final String NOME = "Carlos";
+    private static final String SOBRENOME = "Black";
+    private static final String EMAIL = "carlos@email.com";
+    private static final String DISPONIBILIDADE = "Tarde";
+    private static final String AREA = "Back-end";
+    private static final String LINGUAGEM = "Java";
+    private static final Status STATUS = Status.FILA_DE_ESPERA;
+    private static final LocalDateTime DATA_CADASTRO = LocalDateTime.now();
+
     @Mock
     private UsuarioRepository repository;
 
     @Mock
     private UsuarioRequestDto usuarioRequestDto;
-    
+
     @InjectMocks
     private UsuarioService service;
-    
-    private Usuario usuario;    
-    private static final Long ID_USUARIO = 1L;
-    
+
+    private Usuario usuario;
+
     @BeforeEach
     void setup() {
         usuario = new Usuario();
-        usuario.setNome("Carlos");
-        usuario.setSobrenome("Black");
-        usuario.setEmail("carlos@email.com");
-        usuario.setDisponibilidade("Tarde");
-        usuario.setArea("Back-end");
-        usuario.setLinguagem("Java");
-        usuario.setStatus(Status.FILA_DE_ESPERA);
-        usuario.setDataCadastro(LocalDateTime.now());
+        usuario.setNome(NOME);
+        usuario.setSobrenome(SOBRENOME);
+        usuario.setEmail(EMAIL);
+        usuario.setDisponibilidade(DISPONIBILIDADE);
+        usuario.setArea(AREA);
+        usuario.setLinguagem(LINGUAGEM);
+        usuario.setStatus(STATUS);
+        usuario.setDataCadastro(DATA_CADASTRO);
     }
 
     @Test
     @DisplayName("Quando salvar um usuario deve retornar um objeto do tipo UsuarioResponseDto")
     void testQuandoSalvarUmUsuarioDeveRetornarUmObjetoDoTipoUsuarioResponseDto() {
-
         given(repository.save(usuario)).willReturn(usuario);
 
         UsuarioResponseDto usuarioSalvo = service.create(usuarioRequestDto);
 
         assertNotNull(usuarioSalvo);
-        assertEquals("Carlos", usuarioSalvo.nome());
-        assertEquals("carlos@email.com", usuarioSalvo.email());
+        assertEquals(NOME, usuarioSalvo.nome());
+        assertEquals(EMAIL, usuarioSalvo.email());
         verify(repository, times(1)).save(any(Usuario.class));
     }
 
     @Test
     @DisplayName("Quando buscar todos os usuarios deve retornar uma lista de objetos do tipo UsuarioResponseDto")
     void testQuandoBuscarTodosOsUsuariosDeveRetornarUmaListaDeObjetosDoTipoUsuarioResponseDto() {
-
         given(repository.findAll()).willReturn(List.of(usuario));
 
         List<UsuarioResponseDto> usuarios = service.findAll();
 
         assertNotNull(usuarios);
         assertEquals(1, usuarios.size());
-        assertTrue(usuarios.stream().anyMatch(x -> x.sobrenome().equals("Black")));
-        verify(repository, atLeastOnce()).findAll();
+        assertTrue(usuarios.stream().anyMatch(x -> x.sobrenome().equals(SOBRENOME)));
+        verify(repository, times(1)).findAll();
     }
 
     @Test
     @DisplayName("Deve retornar um usuario com base no ID informado")
     void testDeveRetornarUmUsuarioComBaseNoIdInformado() {
-
         given(repository.findById(anyLong())).willReturn(Optional.of(usuario));
 
         UsuarioResponseDto usuarioEncontrado = service.findById(ID_USUARIO);
 
         assertNotNull(usuarioEncontrado);
-        assertEquals("Carlos", usuarioEncontrado.nome());
-        verify(repository, atLeast(1)).findById(anyLong());
+        assertEquals(NOME, usuarioEncontrado.nome());
+        verify(repository, times(1)).findById(anyLong());
     }
 
     @Test
-    @DisplayName("Deve retornar um ResourceNotFoundException se o usuario nao for encontrado")   
+    @DisplayName("Deve retornar um ResourceNotFoundException se o usuario nao for encontrado")
     void testDeveRetornarUmResourceNotFoundExceptionSeOUsuarioNaoForEncontrado() {
-
         given(repository.findById(anyLong())).willReturn(Optional.empty());
 
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> service.findById(ID_USUARIO));
