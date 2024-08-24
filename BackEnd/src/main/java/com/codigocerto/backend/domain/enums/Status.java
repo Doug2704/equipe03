@@ -11,9 +11,9 @@ public enum Status {
     CANCELADO("Cancelado"),
     CONCLUIDO("Concluido");
 
-    private String statusCadastramento;
+    private final String statusCadastramento;
 
-    private Status(String status) {
+    Status(String status) {
         this.statusCadastramento = status;
     }
 }
